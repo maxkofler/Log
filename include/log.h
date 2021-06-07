@@ -30,6 +30,11 @@ extern Log* hlog;
 #define LOGPP(text, level) hlog->printProgress(text, level);
 #define LOGEP(level) hlog->endProgress(level);
 
+#define LOGTRACE hlog->trace
+
+#define STARTLOGTRACE() LOGTRACE.startTrace();
+#define STOPLOGTRACE(id) LOGTRACE.stopTrace(id);
+
 #define LOG(text, level) hlog->log(text, level);
 #define FLUSH() hlog->flush();
 
