@@ -29,6 +29,19 @@ public:
      **/
     bool                                    add(logentry_t entry);
 
+    /**
+     *  Returns a trace according to the provided ID
+     **/
+    std::vector<logentry_t>                 getTrace(size_t id);
+
+    /**
+     *  Returns a trace with the specified ID and upper level:
+     *      level = I
+     *      
+     *      included:   I, W, E
+     **/
+    std::vector<logentry_t>                 getLevelTrace(size_t id, int level);
+
 private:
     //This is the vector containing all the backtraces[function;name]
     std::vector<std::vector<logentry_t>>    _traces;
