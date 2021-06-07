@@ -88,8 +88,9 @@ public:
         return "0b" + std::bitset< 8 >( num ).to_string();
     }
 
+    LogBacktrace                trace;
+
 private:
-    LogBacktrace*               _traces;
 
     std::vector<LogFunction* >  _functionStack;
     int                         _curLevel;

@@ -6,7 +6,6 @@
 Log::Log(int level, bool printFunNames){
     this->_curLevel = level;
     this->_printFunNames = printFunNames;
-    this->_traces = new LogBacktrace();
 }
 
 void Log::log(std::string text, int level){
@@ -14,7 +13,7 @@ void Log::log(std::string text, int level){
     entry.function = this->_functionStack.back()->name();
     entry.text = text;
     entry.level = level;
-    this->_traces->add(entry);
+    this->trace.add(entry);
     if (level <= _curLevel){
         std::cout.flush();
         if (this->_printFunNames){
@@ -31,7 +30,7 @@ void Log::logw(std::string text, int level){
     entry.function = this->_functionStack.back()->name();
     entry.text = text;
     entry.level = level;
-    this->_traces->add(entry);
+    this->trace.add(entry);
     if (level <= _curLevel){
         std::cout.flush();
         if (this->_printFunNames){
@@ -66,7 +65,7 @@ void Log::printProgress(std::string text, int level){
     entry.function = this->_functionStack.back()->name();
     entry.text = text;
     entry.level = level;
-    this->_traces->add(entry);
+    this->trace.add(entry);
     if (level <= _curLevel){
         this->logw(text, level);
         std::cout << "\r";

@@ -1,9 +1,6 @@
 #ifndef __LOG_BACKTRACE_H__
 #define __LOG_BACKTRACE_H__
 
-class LogBacktrace;
-
-#include "log.h"
 #include "logentry.h"
 
 #include <vector>
