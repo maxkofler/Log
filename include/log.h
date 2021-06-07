@@ -2,7 +2,9 @@
 #define LOG_H
 
 class Log;
+
 #include "logfunction.h"
+#include "logbacktrace.h"
 
 extern Log* hlog;
 
@@ -87,6 +89,8 @@ public:
     }
 
 private:
+    LogBacktrace*               _traces;
+
     std::vector<LogFunction* >  _functionStack;
     int                         _curLevel;
 
