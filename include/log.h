@@ -80,9 +80,15 @@ public:
 
     void                        flush();
 
-    const static std::string    toHexString(uint16_t num){
+    const static std::string    toHexString(int num){
         std::stringstream sstream;
         sstream << "0x" << std::hex << num;
+        return sstream.str();
+    }
+
+    const static std::string    toPHexString(int num){
+        std::stringstream sstream;
+        sstream << std::hex << num;
         return sstream.str();
     }
 
