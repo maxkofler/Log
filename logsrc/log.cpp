@@ -3,9 +3,10 @@
 #include <iostream>
 
 
-Log::Log(int level, bool printFunNames){
+Log::Log(int level, bool printFunNames, bool indent){
     this->_curLevel = level;
     this->_printFunNames = printFunNames;
+    this->_indent = indent;
 }
 
 void Log::log(std::string text, int level){
@@ -16,6 +17,7 @@ void Log::log(std::string text, int level){
     this->trace.add(entry);
     if (level <= _curLevel){
         std::cout.flush();
+        std::cout << p_getIndent();
         if (this->_printFunNames){
             std::cout << "(" << level << ")";
             std::cout << "[" << this->_functionStack.back()->name() << "]>>";
@@ -33,6 +35,7 @@ void Log::logw(std::string text, int level){
     this->trace.add(entry);
     if (level <= _curLevel){
         std::cout.flush();
+        std::cout << p_getIndent();
         if (this->_printFunNames){
             std::cout << "(" << level << ")";
             std::cout << "[" << this->_functionStack.back()->name() << "]>>";

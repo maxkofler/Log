@@ -47,7 +47,7 @@ extern Log* hlog;
 class Log
 {
 public:
-    Log(int level, bool printFunNames);
+    Log(int level, bool printFunNames, bool indent = false);
 
     const static int UE = 1;
     const static int UW = 2;
@@ -109,5 +109,8 @@ private:
     bool                        _inProgress;
 
     bool                        _printFunNames;
+    bool                        _indent;
+
+    std::string                 p_getIndent();
 };
 #endif // LOG_H
