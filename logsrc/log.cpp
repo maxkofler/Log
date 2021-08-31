@@ -86,3 +86,7 @@ void Log::endProgress(int level){
 void Log::setLevel(int level){
     this->_curLevel = level;
 }
+
+int Log::getLevel(){
+    return this->_curLevel;
+}
