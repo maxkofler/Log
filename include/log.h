@@ -80,6 +80,8 @@ public:
 
     void                        flush();
 
+    void                        setLevel(int level);
+
     const static std::string    toHexString(int num){
         std::stringstream sstream;
         sstream << "0x" << std::hex << num;
