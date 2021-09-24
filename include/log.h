@@ -1,120 +1,48 @@
-#ifndef LOG_H
-#define LOG_H
+#ifndef __LOG_H__
+#define __LOG_H__
 
-class Log;
+namespace Log{
+    class Log;
+}
 
-#include "logfunction.h"
-#include "logbacktrace.h"
+extern Log::Log* hlog;
 
-extern Log* hlog;
+namespace Log{
+    enum level{
+        UE,
+        UW,
+        U,
+        P,
+        E,
+        W,
+        I,
+        D,
+        F,
+        N,
+        IO,
+        MEM,
+        FUNCALLS,
+        A
+    };
 
-#ifdef WIN32
-    #define FUN() LogFunction logfun(__FUNCTION__, hlog)
-#else
-    #define FUN() LogFunction logfun(__PRETTY_FUNCTION__, hlog)
-#endif
+    class Log{
 
-#define LOGUE(text) hlog->log(text, Log::UE);
-#define LOGUW(text) hlog->log(text, Log::UW);
-#define LOGU(text) hlog->log(text, Log::U);
-#define LOGP(text) hlog->log(text, Log::P);
-#define LOGE(text) hlog->log(text, Log::E);
-#define LOGW(text) hlog->log(text, Log::W);
-#define LOGI(text) hlog->log(text, Log::I);
-#define LOGD(text) hlog->log(text, Log::D);
-#define LOGF(text) hlog->log(text, Log::F);
-#define LOGIO(text) hlog->log(text, Log::IO);
-#define LOGMEM(text) hlog->log(text, Log::MEM);
+    public:
+        Log(level loglevel);
 
-#define LOGSP(level) hlog->startProgress(level);
-#define LOGPP(text, level) hlog->printProgress(text, level);
-#define LOGEP(level) hlog->endProgress(level);
+        /**
+         * @brief                           Returns if the global log variable is present and initialized
+         */
+        static bool                         check();
 
-#define LOGTRACE hlog->trace
-
-#define STARTLOGTRACE() LOGTRACE.startTrace();
-#define STOPLOGTRACE(id) LOGTRACE.stopTrace(id);
-
-#define LOG(text, level) hlog->log(text, level);
-#define FLUSH() hlog->flush();
-
-#include <vector>
-#include <string>
-#include <inttypes.h>
-#include <sstream>
-#include <bitset>
-
-class Log
-{
-public:
-    Log(int level, bool printFunNames, bool indent = false);
-
-    const static int UE = 1;
-    const static int UW = 2;
-    const static int U = 3;
-    const static int P = 4;
-    const static int E = 5;
-    const static int W = 6;
-    const static int I = 7;
-    const static int D = 8;
-    const static int IO = 9;
-    const static int MEM = 10;
-    const static int F = 11;
-
-    const static int FUNCALLS = 75;
-    const static int A = 100;
-
-    void                        push(LogFunction*);
-
-    void                        pop();
-
-    void                        log(std::string text, int level);
-
-    void                        logw(std::string text, int level);
-
-    void                        startProgress(int level);
-
-    void                        printProgress(std::string text, int level);
-
-    void                        endProgress(int level);
-
-    void                        flush();
-
-    void                        setLevel(int level);
-
-    int                         getLevel();
-
-    const static std::string    toHexString(int num){
-        std::stringstream sstream;
-        sstream << "0x" << std::hex << num;
-        return sstream.str();
-    }
-
-    const static std::string    toPHexString(int num){
-        std::stringstream sstream;
-        sstream << std::hex << num;
-        return sstream.str();
-    }
-
-    const static std::string    toBinString16(uint16_t num){
-        return "0b" + std::bitset< 16 >( num ).to_string();
-    }
-    const static std::string    toBinString8(uint8_t num){
-        return "0b" + std::bitset< 8 >( num ).to_string();
-    }
-
-    LogBacktrace                trace;
-
-private:
-
-    std::vector<LogFunction* >  _functionStack;
-    int                         _curLevel;
-
-    bool                        _inProgress;
-
-    bool                        _printFunNames;
-    bool                        _indent;
-
-    std::string                 p_getIndent();
+        level                               getLevel();
+        void                                setLevel(level loglevel);
+    
+    private:
+        level                               _loglevel;
+    };
 };
-#endif // LOG_H
+
+#define LOGUE(msg)
+
+#endif
