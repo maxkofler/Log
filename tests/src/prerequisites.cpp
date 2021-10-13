@@ -5,10 +5,12 @@
 Log::Log* hlog = nullptr;
 
 TEST(Log, hlogUninitialized){
-    EXPECT_FALSE(Log::Log::check());
+    delete hlog;
+    hlog = nullptr;
+    ASSERT_FALSE(Log::Log::check());
 }
 
 TEST(Log, hlogNew){
     hlog = new Log::Log(Log::D);
-    EXPECT_TRUE(Log::Log::check());
+    ASSERT_TRUE(Log::Log::check());
 }
