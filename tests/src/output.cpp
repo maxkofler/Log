@@ -7,5 +7,6 @@ TEST(Log, output){
     hlog = nullptr;
     ASSERT_FALSE(LOGUE("ERROR"));
     hlog = new Log::Log(Log::A);
+    FUN();
     ASSERT_TRUE(LOGUE("OK"));
 }

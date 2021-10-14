@@ -12,5 +12,7 @@ TEST(Log, hlogUninitialized){
 
 TEST(Log, hlogNew){
     hlog = new Log::Log(Log::D);
+    std::cout << "Now no function call should appear" << std::endl;
+    FUN();
     ASSERT_TRUE(Log::Log::check());
 }

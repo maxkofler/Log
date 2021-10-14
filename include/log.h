@@ -51,9 +51,19 @@ namespace Log{
     private:
         level                               _loglevel;
     };
+
+    class LogFunction{
+    public:
+        LogFunction(std::string name);
+        ~LogFunction();
+    private:
+        std::string _name;
+    };
 };
 
 #ifdef WIN32
+    #define FUN() Log::LogFunction currentFunction(__FUNCTION__);
+
     #define LOGUE(msg) Log::Log::tryLog(Log::UE, __FUNCTION__, msg)
     #define LOGUW(msg) Log::Log::tryLog(Log::UW, __FUNCTION__, msg)
     #define LOGU(msg) Log::Log::tryLog(Log::U, __FUNCTION__, msg)
@@ -67,6 +77,8 @@ namespace Log{
     #define LOGIO(msg) Log::Log::tryLog(Log::IO, __FUNCTION__, msg)
     #define LOGMEM(msg) Log::Log::tryLog(Log::MEM, __FUNCTION__, msg)
 #else
+    #define FUN() Log::LogFunction currentFunction(__PRETTY_FUNCTION__);
+
     #define LOGUE(msg) Log::Log::tryLog(Log::UE, __PRETTY_FUNCTION__, msg)
     #define LOGUW(msg) Log::Log::tryLog(Log::UW, __PRETTY_FUNCTION__, msg)
     #define LOGU(msg) Log::Log::tryLog(Log::U, __PRETTY_FUNCTION__, msg)
