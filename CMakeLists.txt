@@ -9,6 +9,6 @@ add_subdirectory(tests)
 
 include_directories(./include)
 
-file (GLOB_RECURSE libfiles "${PROJECT_SOURCE_DIR}/src/**.cpp")
+file (GLOB_RECURSE libfiles "./src/**.cpp")
 
 add_library(log STATIC ${libfiles})
