@@ -20,6 +20,7 @@ namespace Log{
         W,                  //Warning
         I,                  //Info
         D,                  //Debug
+        API,                //API calls / requests
         F,                  //Files
         N,                  //Networking
         IO,                 //Input / Output (Bus)
@@ -85,6 +86,7 @@ namespace Log{
         #define LOGW(msg) hlog->log(Log::W, __FUNCTION__, msg)
         #define LOGI(msg) hlog->log(Log::I, __FUNCTION__, msg)
         #define LOGD(msg) hlog->log(Log::D, __FUNCTION__, msg)
+        #define LOGAPI(msg) hlog->log(Log::API, __FUNCTION__, msg)
         #define LOGF(msg) hlog->log(Log::F, __FUNCTION__, msg)
         #define LOGN(msg) hlog->log(Log::N, __FUNCTION__, msg)
         #define LOGIO(msg) hlog->log(Log::IO, __FUNCTION__, msg)
@@ -100,6 +102,7 @@ namespace Log{
         #define LOGW(msg) hlog->log(Log::W, __PRETTY_FUNCTION__, msg)
         #define LOGI(msg) hlog->log(Log::I, __PRETTY_FUNCTION__, msg)
         #define LOGD(msg) hlog->log(Log::D, __PRETTY_FUNCTION__, msg)
+        #define LOGAPI(msg) hlog->log(Log::API, __PRETTY_FUNCTION__, msg)
         #define LOGF(msg) hlog->log(Log::F, __PRETTY_FUNCTION__, msg)
         #define LOGN(msg) hlog->log(Log::N, __PRETTY_FUNCTION__, msg)
         #define LOGIO(msg) hlog->log(Log::IO, __PRETTY_FUNCTION__, msg)
@@ -119,6 +122,7 @@ namespace Log{
         #define LOGW(msg) Log::Log::tryLog(Log::W, __FUNCTION__, msg)
         #define LOGI(msg) Log::Log::tryLog(Log::I, __FUNCTION__, msg)
         #define LOGD(msg) Log::Log::tryLog(Log::D, __FUNCTION__, msg)
+        #define LOGAPI(msg) Log::Log::tryLog(Log::API, __PRETTY_FUNCTION__, msg)
         #define LOGF(msg) Log::Log::tryLog(Log::F, __FUNCTION__, msg)
         #define LOGN(msg) Log::Log::tryLog(Log::N, __FUNCTION__, msg)
         #define LOGIO(msg) Log::Log::tryLog(Log::IO, __FUNCTION__, msg)
@@ -134,6 +138,7 @@ namespace Log{
         #define LOGW(msg) Log::Log::tryLog(Log::W, __PRETTY_FUNCTION__, msg)
         #define LOGI(msg) Log::Log::tryLog(Log::I, __PRETTY_FUNCTION__, msg)
         #define LOGD(msg) Log::Log::tryLog(Log::D, __PRETTY_FUNCTION__, msg)
+        #define LOGAPI(msg) Log::Log::tryLog(Log::API, __PRETTY_FUNCTION__, msg)
         #define LOGF(msg) Log::Log::tryLog(Log::F, __PRETTY_FUNCTION__, msg)
         #define LOGN(msg) Log::Log::tryLog(Log::N, __PRETTY_FUNCTION__, msg)
         #define LOGIO(msg) Log::Log::tryLog(Log::IO, __PRETTY_FUNCTION__, msg)
