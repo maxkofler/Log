@@ -21,6 +21,7 @@
 		#define LOGN(msg) hlog->log(Log::N, __PRETTY_FUNCTION__, msg)
 		#define LOGIO(msg) hlog->log(Log::IO, __PRETTY_FUNCTION__, msg)
 		#define LOGMEM(msg) hlog->log(Log::MEM, __PRETTY_FUNCTION__, msg)
+		#define LOGFUNCALLS(msg) hlog->log(Log::FUNCALLS, __PRETTY_FUNCTION__, msg)
 
 	#else
 
@@ -42,6 +43,7 @@
 		#define LOGN(msg) Log::Log::tryLog(Log::N, __PRETTY_FUNCTION__, msg)
 		#define LOGIO(msg) Log::Log::tryLog(Log::IO, __PRETTY_FUNCTION__, msg)
 		#define LOGMEM(msg) Log::Log::tryLog(Log::MEM, __PRETTY_FUNCTION__, msg)
+		#define LOGFUNCALLS(msg) Log::Log::tryLog(Log::FUNCALLS, __PRETTY_FUNCTION__, msg)
 
 	#endif
 

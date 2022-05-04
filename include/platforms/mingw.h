@@ -2,6 +2,7 @@
 #define __WIN32_H__
 
 	#ifdef LOG_NOCHECK
+
 		#define FUN() Log::LogFunction currentFunction(__FUNCTION__);
 
 		#define LOGUE(msg) hlog->log(Log::UE, __FUNCTION__, msg)
@@ -20,7 +21,10 @@
 		#define LOGN(msg) hlog->log(Log::N, __FUNCTION__, msg)
 		#define LOGIO(msg) hlog->log(Log::IO, __FUNCTION__, msg)
 		#define LOGMEM(msg) hlog->log(Log::MEM, __FUNCTION__, msg)
+		#define LOGFUNCALLS(msg) hlog->log(Log::FUNCALLS, __FUNCTION__, msg)
+
 	#else
+
 		#define FUN() Log::LogFunction currentFunction(__FUNCTION__);
 
 		#define LOGUE(msg) Log::Log::tryLog(Log::UE, __FUNCTION__, msg)
@@ -39,6 +43,9 @@
 		#define LOGN(msg) Log::Log::tryLog(Log::N, __FUNCTION__, msg)
 		#define LOGIO(msg) Log::Log::tryLog(Log::IO, __FUNCTION__, msg)
 		#define LOGMEM(msg) Log::Log::tryLog(Log::MEM, __FUNCTION__, msg)
+
+		#define LOGFUNCALLS(msg) Log::Log::tryLog(Log::FUNCALLS, __FUNCTION__, msg)
+
 	#endif
 
 #endif
