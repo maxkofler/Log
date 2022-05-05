@@ -1,6 +1,7 @@
 #ifndef __LOG_H__
 #define __LOG_H__
 
+#include <ostream>
 #include <string>
 #include <mutex>
 
@@ -33,7 +34,8 @@ namespace Log{
 	};
 
 	enum feature{
-		FEATURE_PRINTFUNNAMES
+		FEATURE_PRINTFUNNAMES,		//If Log should print the function name of the log message
+		FEATURE_PROFILE				//If Log should produce a profile trace, this impacts performance
 	};
 
 	class Log{
@@ -42,30 +44,41 @@ namespace Log{
 		Log(level loglevel);
 
 		/**
-		 * @brief                           Returns if the global log variable is present and initialized
+		 * @brief	Sets the output stream for the profiling output
+		 * @param	stream				The stream
 		 */
-		static bool                         check();
+		bool							setProfileStream(std::ostream* stream);
 
 		/**
-		 * @brief                           Tries to log the provided contents (USED ONLY BY MACRO!!!)
+		 * @brief						Returns if the global log variable is present and initialized
 		 */
-		static bool                         tryLog(level loglevel, std::string function, std::string message);
+		static bool						check();
 
 		/**
-		 * @brief                           En/Disables the provided feature
+		 * @brief						Tries to log the provided contents (USED ONLY BY MACRO!!!)
 		 */
-		bool                                setFeature(feature feature, bool state);
+		static bool						tryLog(level loglevel, std::string function, std::string message);
 
-		bool                                log(level loglevel, std::string function, std::string message);
-		bool                                log(level loglevel, std::string function, const char* message);
+		/**
+		 * @brief						En/Disables the provided feature
+		 */
+		bool							setFeature(feature feature, bool state);
 
-		level                               getLevel();
-		void                                setLevel(level loglevel);
+		bool							log(level loglevel, std::string function, std::string message);
+		bool							log(level loglevel, std::string function, const char* message);
 
+		level							getLevel();
+		void							setLevel(level loglevel);
+
+	#ifndef FRIEND_LOG
 	private:
-		level                               _loglevel;
-		bool                                _print_function_names;
-		std::mutex                          _m_logging;
+	#endif
+
+		level							_loglevel;
+		bool							_print_function_names;
+		std::mutex						_m_logging;
+
+		std::ostream*					_profile_stream;
 	};
 
 	class LogFunction{
@@ -73,7 +86,7 @@ namespace Log{
 		LogFunction(std::string name);
 		~LogFunction();
 	private:
-		std::string                         _name;
+		std::string						_name;
 	};
 };
 

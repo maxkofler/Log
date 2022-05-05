@@ -4,6 +4,7 @@
 
 Log::Log::Log(level level){
 	this->_loglevel = level;
+	this->_profile_stream = nullptr;
 
 	#ifdef LOG_NOCHECK
 		std::cout << "Log module checks have been disabled, crashes may happen depending on the quality of the software!" << std::endl;
