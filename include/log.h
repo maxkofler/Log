@@ -38,6 +38,13 @@ namespace Log{
 		FEATURE_PROFILE				//If Log should produce a profile trace, this impacts performance
 	};
 
+	struct function_profile{
+		std::string funName;
+		long long start, end;
+		size_t threadID;
+		size_t procID;
+	};
+
 	class Log{
 
 	public:
@@ -67,6 +74,12 @@ namespace Log{
 		bool							log(level loglevel, std::string function, std::string message);
 		bool							log(level loglevel, std::string function, const char* message);
 
+		/**
+		 * @brief	Writes an entry to the profiling file
+		 * @param	res					The function profile result
+		 */
+		bool							profileFunctionTime(struct function_profile res);
+
 		level							getLevel();
 		void							setLevel(level loglevel);
 
@@ -78,6 +91,8 @@ namespace Log{
 		bool							_print_function_names;
 		std::mutex						_m_logging;
 
+		bool							_enable_profiling;
+		size_t							_profiles_count;
 		std::ostream*					_profile_stream;
 	};
 
