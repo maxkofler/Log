@@ -4,6 +4,25 @@
 
 static bool alreadyNotedBadStream = false;
 
+bool Log::Log::setProfileStream(std::ostream* stream){
+
+	if (stream == nullptr){
+		std::cerr << "[Log] Profile stream is NULL" << std::endl;
+		return false;
+	}
+
+	if (stream->bad()){
+		std::cerr << "[Log] Profile stream is bad" << std::endl;
+		return false;
+	}
+
+	_profile_stream = stream;
+
+	writeProfileHeader();
+
+	return true;
+}
+
 bool Log::Log::profileFunctionTime(struct function_profile res){
 
 	if (!_enable_profiling)
@@ -39,17 +58,41 @@ bool Log::Log::profileFunctionTime(struct function_profile res){
 
 	_profiles_count++;
 
-	/*
-	m_OutputStream << "{";
-	m_OutputStream << "\"cat\":\"function\",";
-	m_OutputStream << "\"dur\":" << (result.End - result.Start) << ',';
-	m_OutputStream << "\"name\":\"" << name << "\",";
-	m_OutputStream << "\"ph\":\"X\",";
-	m_OutputStream << "\"pid\":0,";
-	m_OutputStream << "\"tid\":" << result.ThreadID << ",";
-	m_OutputStream << "\"ts\":" << result.Start;
-	m_OutputStream << "}";
-	*/
-
 	return true;
+}
+
+void Log::Log::writeProfileHeader(){
+	if (!_enable_profiling)
+		return;
+
+	if (_profile_stream == nullptr)
+		return;
+
+	if (_profile_stream->bad()){
+		if (!alreadyNotedBadStream){
+			std::cerr << "[Log] Tried to output profile to bad output stream" << std::endl;
+			alreadyNotedBadStream = true;
+		}
+		return;
+	}
+
+	*_profile_stream << "{\"otherData\": {},\"traceEvents\":[" << std::endl;
+}
+
+void Log::Log::writeProfileFooter(){
+	if (!_enable_profiling)
+		return;
+
+	if (_profile_stream == nullptr)
+		return;
+
+	if (_profile_stream->bad()){
+		if (!alreadyNotedBadStream){
+			std::cerr << "[Log] Tried to output profile to bad output stream" << std::endl;
+			alreadyNotedBadStream = true;
+		}
+		return;
+	}
+
+	*_profile_stream << "]}" << std::endl;
 }

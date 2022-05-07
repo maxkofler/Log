@@ -17,6 +17,10 @@ Log::Log::Log(level level){
 	#endif
 }
 
+Log::Log::~Log(){
+	writeProfileFooter();
+}
+
 bool Log::Log::setFeature(feature mode, bool state){
 	switch(mode){
 		case FEATURE_PRINTFUNNAMES:

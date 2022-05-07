@@ -49,6 +49,7 @@ namespace Log{
 
 	public:
 		Log(level loglevel);
+		~Log();
 
 		/**
 		 * @brief	Sets the output stream for the profiling output
@@ -79,6 +80,16 @@ namespace Log{
 		 * @param	res					The function profile result
 		 */
 		bool							profileFunctionTime(struct function_profile res);
+
+		/**
+		 * @brief	Writes the necessary header to the profiling stream
+		 */
+		void							writeProfileHeader();
+
+		/**
+		 * @brief	Writes the necessary footer to the profiling stream
+		 */
+		void							writeProfileFooter();
 
 		level							getLevel();
 		void							setLevel(level loglevel);
