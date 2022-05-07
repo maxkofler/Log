@@ -3,7 +3,7 @@
 
 	#ifdef LOG_NOCHECK
 
-		#define FUN() Log::LogFunction currentFunction(__PRETTY_FUNCTION__);
+		#define FUN() Log::LogFunction currentFunction(__PRETTY_FUNCTION__)
 
 		#define LOGUE(msg) hlog->log(Log::UE, __PRETTY_FUNCTION__, msg)
 		#define LOGUW(msg) hlog->log(Log::UW, __PRETTY_FUNCTION__, msg)
@@ -25,7 +25,7 @@
 
 	#else
 
-		#define FUN() Log::LogFunction currentFunction(__PRETTY_FUNCTION__);
+		#define FUN() Log::LogFunction currentFunction(__PRETTY_FUNCTION__)
 
 		#define LOGUE(msg) Log::Log::tryLog(Log::UE, __PRETTY_FUNCTION__, msg)
 		#define LOGUW(msg) Log::Log::tryLog(Log::UW, __PRETTY_FUNCTION__, msg)

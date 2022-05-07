@@ -11,15 +11,27 @@ TEST(Log, profileFunctionTime_output){
 	FUN();
 
 	std::cout << "[TEST] A function profile should appear" << std::endl;
-	struct Log::function_profile res;
-	res.funName = "LogTestingFunction";
-	res.start = 10;
-	res.end = 10000;
-	res.procID = 23256;
-	res.threadID = 2804752409;
-	hlog->profileFunctionTime(res);
+	Log::ProfileProbe probe1("A test function");
+	Log::ProfileProbe probe2("A secondf sdoflkg", true);
+	probe1.start();
+	sleep(1);
+	probe1.stop();
+	probe2.stop();
+	hlog->profileFunctionTime(probe1.get());
+	hlog->profileFunctionTime(probe2.get());
 
 	hlog->setFeature(Log::FEATURE_PROFILE, false);
 	std::cout << "\n[TEST] No function profile should appear" << std::endl;
-	hlog->profileFunctionTime(res);
+	hlog->profileFunctionTime(probe1.get());
+}
+
+TEST(Log, profileFunctionTime_scope){
+	Log::Log* hlog = new Log::Log(Log::FUNCALLS);
+	hlog->setProfileStream(&std::cout);
+	hlog->setFeature(Log::FEATURE_PROFILE, true);
+
+	{
+		FUN();
+		sleep(1);
+	}
 }

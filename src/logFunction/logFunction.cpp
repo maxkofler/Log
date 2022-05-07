@@ -8,15 +8,24 @@ namespace Log{
 		if (Log::check() && hlog->getLevel() >= FUNCALLS){
 			std::cout << "Entered " << this->_name << std::endl;
 		}
+
+		#ifdef LOG_ENABLE_PROFILING
+		_profileProbe = ProfileProbe(name);
+		_profileProbe.start();
+		#endif
 	}
 
 	LogFunction::~LogFunction(){
+		#ifdef LOG_ENABLE_PROFILING
+		_profileProbe.stop();
+		#endif
+
 		if (Log::check() && hlog->getLevel() >= FUNCALLS){
 			std::cout << "Left " << this->_name << std::endl;
 		}
 
 		#ifdef LOG_ENABLE_PROFILING
-		//hlog->profileFunctionTime(_name);
+		hlog->profileFunctionTime(_profileProbe.get());
 		#endif
 	}
 }
