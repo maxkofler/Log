@@ -19,6 +19,7 @@ namespace Log{
 		using namespace std::chrono;
 		_result.start = time_point_cast<microseconds>(high_resolution_clock::now()).time_since_epoch().count();
 		_result.threadID = std::hash<std::thread::id>()(std::this_thread::get_id());
+		_result.procID = 0;
 	}
 
 	void ProfileProbe::stop(){
