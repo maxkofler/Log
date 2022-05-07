@@ -107,7 +107,6 @@ namespace Log{
 		std::ostream*					_profile_stream;
 	};
 
-	#ifdef LOG_ENABLE_PROFILING
 	class ProfileProbe{
 	public:
 		ProfileProbe();
@@ -123,7 +122,6 @@ namespace Log{
 	private:
 		struct function_profile		_result;
 	};
-	#endif
 
 	class LogFunction{
 	public:
@@ -132,9 +130,7 @@ namespace Log{
 	private:
 
 		std::string						_name;
-		#ifdef LOG_ENABLE_PROFILING
 		ProfileProbe					_profileProbe;
-		#endif
 	};
 };
 
