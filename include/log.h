@@ -130,7 +130,10 @@ namespace Log{
 	private:
 
 		std::string						_name;
+
+		#ifdef LOG_ENABLE_PROFILING
 		ProfileProbe					_profileProbe;
+		#endif
 	};
 };
 
