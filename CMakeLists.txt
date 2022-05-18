@@ -12,4 +12,4 @@ include_directories(include)
 
 file (GLOB_RECURSE libfiles "src/**.cpp")
 
-add_library(log STATIC ${libfiles})
+add_library(log OBJECT ${libfiles})

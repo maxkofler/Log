@@ -1,5 +1,8 @@
 #include "log.h"
 
+//The global definition of the hlog instance
+Log::Log* hlog = nullptr;
+
 #include <iostream>
 
 Log::Log::Log(level level){
