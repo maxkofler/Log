@@ -5,6 +5,9 @@
 static bool errorPlot = false;
 
 bool Log::Log::tryLog(level loglevel, std::string function, std::string message){
+	if (errorPlot)
+		return false;
+
 	if (!check() && !errorPlot){
 		errorPlot = true;
 		std::cerr << "!!!!!!!!!!!!!!!!!!!!" << std::endl << std::endl;
