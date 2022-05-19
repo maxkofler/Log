@@ -1,6 +1,7 @@
 #include "log.h"
 
 #include <iostream>
+#include <algorithm>
 
 static bool alreadyNotedBadStream = false;
 
