@@ -2,6 +2,8 @@ cmake_minimum_required (VERSION 3.5)
 
 project(Log)
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 option(LOG_PROFILING "Enable profiling support" OFF)
 if (LOG_PROFILING)
     message("INFO Building with profiling support, this will slow down your application!")
