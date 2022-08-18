@@ -6,9 +6,7 @@ namespace Log{
 	bool Log::log(level loglevel, std::string function, std::string message){
 		if (loglevel <= this->_loglevel){
 			#ifndef LOG_NOMUTEX
-			this->_m_logging.lock();
-			#else
-				#warning DISABLED LOG MUTEX, THIS WILL IMPROVE PERFORMANCE! this can lead to overlapping log messages!
+				this->_m_logging.lock();
 			#endif
 
 
@@ -19,7 +17,7 @@ namespace Log{
 			}
 
 			#ifndef LOG_NOMUTEX
-			this->_m_logging.unlock();
+				this->_m_logging.unlock();
 			#endif
 		}
 		return true;

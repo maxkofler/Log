@@ -26,6 +26,12 @@ if (LOG_NOCHECK)
     target_compile_definitions(log PRIVATE "LOG_NOCHECK")
 endif()
 
+option(LOG_NOMUTEX "Disable the logging mutex to improve performance, log messages can overlap!")
+if (LOG_NOMUTEX)
+    message("[LOG INFO] Building with logging mutex disabled, this can lead to overlapping messages!")
+    target_compile_definitions(log PRIVATE "LOG_NOMUTEX")
+endif()
+
 option(LOG_PROFILING "Enable profiling support" ON)
 if (LOG_PROFILING)
     message("[LOG INFO] Building with profiling support, this will slow down your application!")
