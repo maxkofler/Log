@@ -19,3 +19,7 @@ bool Log::Log::tryLog(level loglevel, std::string function, std::string message)
 	}
 	return true;
 }
+
+void Log::Log::resetWarnings(){
+	errorPlot = false;
+}

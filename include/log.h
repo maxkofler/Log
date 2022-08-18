@@ -13,24 +13,24 @@ extern Log::Log* hlog;
 
 namespace Log{
 	enum level{
-		UE,                 //User Error
-		UW,                 //User Warning
-		U,                  //User
-		E,                  //Error
-		W,                  //Warning
-		I,                  //Info
-		P,                  //Programmer info (implementation warnings...)
-		DE,					//Debug Error (for developer)
-		DW,					//Debug Warning (for developer)
-		DI,					//Debug Info (for developer)
-		D,                  //Debug
-		API,                //API calls / requests
-		F,                  //Files
-		N,                  //Networking
-		IO,                 //Input / Output (Bus)
-		MEM,                //Memory (allocating...)
-		FUNCALLS,           //Function calls being plot
-		A                   //Everything
+		UE=0,				//User Error
+		UW=1,				//User Warning
+		U=2,				//User
+		E=3,				//Error
+		W=4,				//Warning
+		I=5,				//Info
+		P=6,				//Programmer info (implementation warnings...)
+		DE=7,				//Debug Error (for developer)
+		DW=8,				//Debug Warning (for developer)
+		DI=9,				//Debug Info (for developer)
+		D=10,				//Debug
+		API=11,				//API calls / requests
+		F=12,				//Files
+		N=13,				//Networking
+		IO=14,				//Input / Output (Bus)
+		MEM=15,				//Memory (allocating...)
+		FUNCALLS=16,		//Function calls being plot
+		A=17				//Everything
 	};
 
 	enum feature{
@@ -68,6 +68,11 @@ namespace Log{
 		static bool						tryLog(level loglevel, std::string function, std::string message);
 
 		/**
+		 * @brief	Resets all the warnings that block the Log module from checking some things again due to performance reasons
+		 */
+		static void						resetWarnings();
+
+		/**
 		 * @brief						En/Disables the provided feature
 		 */
 		bool							setFeature(feature feature, bool state);
@@ -90,6 +95,7 @@ namespace Log{
 		 * @brief	Writes the necessary footer to the profiling stream
 		 */
 		void							writeProfileFooter();
+
 
 		level							getLevel();
 		void							setLevel(level loglevel);
@@ -137,10 +143,7 @@ namespace Log{
 	};
 };
 
-	#ifdef WIN32
-		#include "platforms/win32.h"
-	#else
-		#include "platforms/gcc.h"
-	#endif
+	#include "levels.h"
+	#include "fun.h"
 
 #endif

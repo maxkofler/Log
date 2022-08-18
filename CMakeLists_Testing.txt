@@ -13,8 +13,21 @@ file (GLOB_RECURSE libfiles "src/**.cpp")
 
 add_library(log STATIC ${libfiles})
 
-option(LOG_PROFILING "Enable profiling support" OFF)
+option(LOG_MAXLEVEL "The maximum logging level that gets used (Default=LOGU)" FALSE)
+if (NOT LOG_MAXLEVEL)
+    set(LOG_MAXLEVEL 2)
+endif()
+message("[LOG INFO] Log maximum level set to " ${LOG_MAXLEVEL})
+target_compile_definitions(log PUBLIC LOG_MAX_LEVEL=${LOG_MAXLEVEL})
+
+option(LOG_NOCHECK "Disable safety checks (can cause nullptrs!)" OFF)
+if (LOG_NOCHECK)
+    message("[LOG INFO] Building with log checks disabled, this can cause segfaults!")
+    target_compile_definitions(log PRIVATE "LOG_NOCHECK")
+endif()
+
+option(LOG_PROFILING "Enable profiling support" ON)
 if (LOG_PROFILING)
-    message("INFO Building with profiling support, this will slow down your application!")
+    message("[LOG INFO] Building with profiling support, this will slow down your application!")
     target_compile_definitions(log PUBLIC "LOG_ENABLE_PROFILING")
 endif()

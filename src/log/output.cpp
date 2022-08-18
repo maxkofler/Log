@@ -2,10 +2,6 @@
 
 #include <iostream>
 
-#ifdef LOG_NOCHECK
-	#warning YOU HAVE DISABLED LOG CHECKS, THIS WILL IMPROVE PERFORMANCE! segfaults can happen if you do not set up your log module correctly!
-#endif
-
 namespace Log{
 	bool Log::log(level loglevel, std::string function, std::string message){
 		if (loglevel <= this->_loglevel){

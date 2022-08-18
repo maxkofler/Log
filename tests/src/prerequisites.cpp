@@ -2,8 +2,6 @@
 
 #include "log.h"
 
-Log::Log* hlog = nullptr;
-
 TEST(Log, hlogUninitialized){
 	delete hlog;
 	hlog = nullptr;

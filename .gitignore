@@ -2,3 +2,4 @@ build/
 Testing/
 *.user
 .vscode/
+.vscode/settings.json
