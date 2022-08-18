@@ -6,7 +6,7 @@ Log::Log* hlog = nullptr;
 #include <iostream>
 
 Log::Log::Log(level level){
-	this->_loglevel = level;
+	this->setLevel(level);
 	this->_profiles_count = 0;
 	this->_profile_stream = nullptr;
 	this->_enable_profiling = false;
