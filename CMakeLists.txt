@@ -6,6 +6,15 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 include_directories(include)
 
+option(LOG_TESTS "If the log tests should be built" OFF)
+if (LOG_TESTS)
+    message("[LOG INFO] Enabled Log tests")
+    enable_testing()
+    set(LOG_PROFILING CACHE BOOL ON "Enable Log profiling support for testing")
+    add_subdirectory(googletest)
+    add_subdirectory(tests)
+endif()
+
 file (GLOB_RECURSE libfiles "src/**.cpp")
 
 add_library(log OBJECT ${libfiles})
