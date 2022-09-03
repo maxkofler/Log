@@ -46,13 +46,21 @@ bool Log::Log::profileFunctionTime(struct function_profile res){
 	std::replace(res.funName.begin(), res.funName.end(), '"', '\'');
 
 	*_profile_stream << "{\n";
-	*_profile_stream << "\t\"cat\":\"function\",\n";
-	*_profile_stream << "\t\"dur\":" << (res.end - res.start) << ",\n";
+	*_profile_stream << "\t\"cat\":\"PERF\",\n";
 	*_profile_stream << "\t\"name\":\"" << res.funName << "\",\n";
-	*_profile_stream << "\t\"ph\":\"X\",\n";
+	*_profile_stream << "\t\"ph\":\"B\",\n";
 	*_profile_stream << "\t\"pid\":" << res.procID << ",\n";
 	*_profile_stream << "\t\"tid\":" << res.threadID << ",\n";
 	*_profile_stream << "\t\"ts\":" << res.start << "\n";
+	*_profile_stream << "},\n";
+
+	*_profile_stream << "{\n";
+	*_profile_stream << "\t\"cat\":\"PERF\",\n";
+	*_profile_stream << "\t\"name\":\"" << res.funName << "\",\n";
+	*_profile_stream << "\t\"ph\":\"E\",\n";
+	*_profile_stream << "\t\"pid\":" << res.procID << ",\n";
+	*_profile_stream << "\t\"tid\":" << res.threadID << ",\n";
+	*_profile_stream << "\t\"ts\":" << res.end << "\n";
 	*_profile_stream << "}";
 
 	_profile_stream->flush();

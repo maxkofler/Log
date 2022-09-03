@@ -3,3 +3,4 @@ Testing/
 *.user
 .vscode/
 .vscode/settings.json
+.DS_Store
