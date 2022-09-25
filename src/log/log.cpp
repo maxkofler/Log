@@ -10,14 +10,6 @@ Log::Log::Log(level level){
 	this->_profiles_count = 0;
 	this->_profile_stream = nullptr;
 	this->_enable_profiling = false;
-
-	#ifdef LOG_NOCHECK
-		std::cout << "Log module checks have been disabled, crashes may happen depending on the quality of the software!" << std::endl;
-	#endif
-
-	#ifdef LOG_NOMUTEX
-		std::cout << "Log mutex has been disabled, logs can overlap!" << std::endl;
-	#endif
 }
 
 Log::Log::~Log(){
