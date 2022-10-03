@@ -3,7 +3,10 @@
 
 #include <ostream>
 #include <string>
+
+#ifndef LOG_NOMUTEX
 #include <mutex>
+#endif
 
 namespace Log{
 	class Log;
@@ -106,7 +109,10 @@ namespace Log{
 
 		level							_loglevel;
 		bool							_print_function_names;
+
+		#ifndef LOG_NOMUTEX
 		std::mutex						_m_logging;
+		#endif
 
 		bool							_enable_profiling;
 		size_t							_profiles_count;
