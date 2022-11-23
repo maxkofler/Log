@@ -1,6 +1,7 @@
 #ifndef __LOG_H__
 #define __LOG_H__
 
+#include <map>
 #include <ostream>
 #include <string>
 
@@ -117,6 +118,11 @@ namespace Log{
 		bool							_enable_profiling;
 		size_t							_profiles_count;
 		std::ostream*					_profile_stream;
+
+		/**
+		 * @brief	A map containing all the output streams and their levels
+		 */
+		std::map<std::ostream&, level>	_streams;
 	};
 
 	class ProfileProbe{
