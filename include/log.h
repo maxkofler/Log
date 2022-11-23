@@ -38,7 +38,6 @@ namespace Log{
 	};
 
 	enum feature{
-		FEATURE_PRINTFUNNAMES,		//If Log should print the function name of the log message
 		FEATURE_PROFILE				//If Log should produce a profile trace, this impacts performance
 	};
 

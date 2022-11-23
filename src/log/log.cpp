@@ -5,8 +5,7 @@ Log::Log* hlog = nullptr;
 
 #include <iostream>
 
-Log::Log::Log(level level){
-	this->setLevel(level);
+Log::Log::Log(){
 	this->_profiles_count = 0;
 	this->_profile_stream = nullptr;
 	this->_enable_profiling = false;
@@ -18,8 +17,6 @@ Log::Log::~Log(){
 
 bool Log::Log::setFeature(feature mode, bool state){
 	switch(mode){
-		case FEATURE_PRINTFUNNAMES:
-			this->_print_function_names = state;
 
 		case FEATURE_PROFILE:
 			this->_enable_profiling = state;
