@@ -12,7 +12,7 @@
 #include "log.h"
 
 TEST(Log, Streams_Output){
-	Log::Log l(Log::D);
+	Log::Log l;
 
 	std::stringstream ss;
 
@@ -26,5 +26,8 @@ TEST(Log, Streams_Output){
 
 	l.log(Log::D, "TestFun", testStr);
 
+	ASSERT_EQ(testStr + "\n", ss.str());
+
+	l.log(Log::MEM, "TestFun", testStr);
 	ASSERT_EQ(testStr + "\n", ss.str());
 }
