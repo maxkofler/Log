@@ -57,7 +57,7 @@ namespace Log{
 	class Log{
 
 	public:
-		Log(level loglevel);
+		Log();
 		~Log();
 
 		/**
@@ -113,16 +113,9 @@ namespace Log{
 		 */
 		void							writeProfileFooter();
 
-
-		level							getLevel();
-		void							setLevel(level loglevel);
-
 	#ifndef FRIEND_LOG
 	private:
 	#endif
-
-		level							_loglevel;
-		bool							_print_function_names;
 
 		#ifndef LOG_NOMUTEX
 		std::mutex						_m_logging;
