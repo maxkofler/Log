@@ -8,7 +8,7 @@ namespace Log{
 		//Go through every stream
 		for (const auto &stream : _streams){
 
-			if (stream.second.loglevel <= this->_loglevel){
+			if (loglevel <= stream.second.loglevel){
 				#ifndef LOG_NOMUTEX
 					this->_m_logging.lock();
 				#endif
