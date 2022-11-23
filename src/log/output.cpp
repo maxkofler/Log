@@ -4,21 +4,25 @@
 
 namespace Log{
 	bool Log::log(level loglevel, std::string function, std::string message){
-		if (loglevel <= this->_loglevel){
-			#ifndef LOG_NOMUTEX
-				this->_m_logging.lock();
-			#endif
 
+		//Go through every stream
+		for (const auto &stream : _streams){
 
-			if (this->_print_function_names){
-				std::cout << "[" << function << "]>>>" << message << std::endl;
-			}else{
-				std::cout << message << std::endl;
+			if (stream.second.loglevel <= this->_loglevel){
+				#ifndef LOG_NOMUTEX
+					this->_m_logging.lock();
+				#endif
+
+				if (stream.second.print_function_names){
+					(*stream.first) << "[" << function << "]>>>" << message << std::endl;
+				}else{
+					(*stream.first) << message << std::endl;
+				}
+
+				#ifndef LOG_NOMUTEX
+					this->_m_logging.unlock();
+				#endif
 			}
-
-			#ifndef LOG_NOMUTEX
-				this->_m_logging.unlock();
-			#endif
 		}
 		return true;
 	}

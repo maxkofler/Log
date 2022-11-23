@@ -49,6 +49,11 @@ namespace Log{
 		size_t procID;
 	};
 
+	struct stream_config{
+		level	loglevel;
+		bool	print_function_names;
+	};
+
 	class Log{
 
 	public:
@@ -75,6 +80,14 @@ namespace Log{
 		 * @brief	Resets all the warnings that block the Log module from checking some things again due to performance reasons
 		 */
 		static void						resetWarnings();
+
+		/**
+		 * @brief	Adds a output stream to this Log instance
+		 * @param	stream				The stream to output to
+		 * @param	stream_config		The stream configuration to use for this stream
+		 * @return	bool	False if the stream has already been added
+		 */
+		bool							addStream(std::ostream& stream, stream_config conf);
 
 		/**
 		 * @brief						En/Disables the provided feature
@@ -122,7 +135,7 @@ namespace Log{
 		/**
 		 * @brief	A map containing all the output streams and their levels
 		 */
-		std::map<std::ostream&, level>	_streams;
+		std::map<std::ostream*, stream_config>	_streams;
 	};
 
 	class ProfileProbe{
