@@ -14,3 +14,12 @@ void Log::Log::setLevel(level loglevel){
 	this->_loglevel = loglevel;
 }
 */
+
+Log::stream_config* Log::Log::getStreamConf(std::ostream& stream){
+	std::ostream* streamPtr = &stream;
+
+	if (_streams.count(streamPtr) <= 0)
+		return nullptr;
+
+	return &(_streams[streamPtr]);
+}

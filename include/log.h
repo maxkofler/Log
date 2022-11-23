@@ -89,6 +89,12 @@ namespace Log{
 		bool							addStream(std::ostream& stream, stream_config conf);
 
 		/**
+		 * @brief	Returns a pointer to the stream config
+		 * @param	stream				The stream to get the config from
+		 */
+		stream_config*					getStreamConf(std::ostream& stream);
+
+		/**
 		 * @brief						En/Disables the provided feature
 		 */
 		bool							setFeature(feature feature, bool state);
