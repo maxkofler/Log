@@ -10,8 +10,8 @@ option(LOG_PROFILING "Enable profiling support" OFF)
 option(LOG_NOMUTEX "Disable the logging mutex to improve performance, log messages can overlap!")
 option(LOG_NOCHECK "Disable safety checks (can cause nullptrs!)" OFF)
 option(LOG_MAXLEVEL "The maximum logging level that gets used (Default=LOGU)" OFF)
-
 option(LOG_TESTS "If the log tests should be built" OFF)
+
 if (LOG_TESTS)
     message("[LOG INFO] Enabled Log tests")
     enable_testing()
@@ -23,6 +23,7 @@ endif()
 file (GLOB_RECURSE libfiles "src/**.cpp")
 
 add_library(log OBJECT ${libfiles})
+target_compile_features(log PRIVATE cxx_std_17)
 
 if (NOT LOG_MAXLEVEL)
     set(LOG_MAXLEVEL 2)
