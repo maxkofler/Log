@@ -16,5 +16,5 @@ TEST(Log, output){
 	hlog->setFeature(Log::FEATURE_PRINTFUNNAMES, true);
 	ASSERT_TRUE(LOGUE("OK"));
 	hlog->setFeature(Log::FEATURE_PRINTFUNNAMES, false);
-	ASSERT_TRUE(LOGUE("OK, NO FUNCTION NAME"));
+	ASSERT_TRUE(LOGUW("OK, NO FUNCTION NAME"));
 }

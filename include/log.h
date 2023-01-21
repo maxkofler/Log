@@ -38,7 +38,8 @@ namespace Log{
 
 	enum feature{
 		FEATURE_PRINTFUNNAMES,		//If Log should print the function name of the log message
-		FEATURE_PROFILE				//If Log should produce a profile trace, this impacts performance
+		FEATURE_PROFILE,			//If Log should produce a profile trace, this impacts performance
+		FEATURE_COLOR				//If Log should enable Yellow for warnings and Red for errors
 	};
 
 	struct function_profile{
@@ -109,6 +110,7 @@ namespace Log{
 
 		level							_loglevel;
 		bool							_print_function_names;
+		bool							_enable_colors = true;
 
 		#ifndef LOG_NOMUTEX
 		std::mutex						_m_logging;
