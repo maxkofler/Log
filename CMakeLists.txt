@@ -9,8 +9,10 @@ include_directories(include)
 option(LOG_PROFILING "Enable profiling support" OFF)
 option(LOG_NOMUTEX "Disable the logging mutex to improve performance, log messages can overlap!")
 option(LOG_NOCHECK "Disable safety checks (can cause nullptrs!)" OFF)
+option(LOG_NOCOLOR "Disable logging using colors" OFF)
 option(LOG_MAXLEVEL "The maximum logging level that gets used (Default=LOGU)" OFF)
 option(LOG_TESTS "If the log tests should be built" OFF)
+
 
 if (LOG_TESTS)
     message("[LOG INFO] Enabled Log tests")
@@ -39,6 +41,11 @@ endif()
 if (LOG_NOMUTEX)
     message("[LOG INFO] Building with logging mutex disabled, this can lead to overlapping messages!")
     target_compile_definitions(log PUBLIC "LOG_NOMUTEX")
+endif()
+
+if (LOG_NOCOLOR)
+    message("[LOG INFO] Building without color support")
+    target_compile_definitions(log PUBLIC "LOG_NOCOLOR")
 endif()
 
 if (LOG_PROFILING)

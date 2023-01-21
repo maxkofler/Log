@@ -1,6 +1,7 @@
 #include "log.h"
 
 #include <iostream>
+#include <sstream>
 
 namespace Log{
 	bool Log::log(level loglevel, std::string function, std::string message){
@@ -13,11 +14,30 @@ namespace Log{
 					this->_m_logging.lock();
 				#endif
 
-				if (stream.second.print_function_names){
-					(*stream.first) << "[" << function << "]>>>" << message << std::endl;
-				}else{
-					(*stream.first) << message << std::endl;
-				}
+				//A temporary buffer
+				std::stringstream ss_output;
+
+				#ifndef LOG_NOCOLOR
+				//Add the color information
+				if (stream.second.enable_colors)
+					if (loglevel == E || loglevel == UE)
+						ss_output << "\033[31;1m";
+					if (loglevel == W || loglevel == UW)
+						ss_output << "\033[33;1m";
+
+				if (stream.second.print_function_names)
+					ss_output << "[" << function << "]>>>";
+				#endif
+
+				ss_output << message;
+
+				#ifndef LOG_NOCOLOR
+				//Terminate color information
+				if (stream.second.enable_colors)
+					ss_output << "\033[0m";
+				#endif
+
+				(*stream.first) << ss_output.str() << std::endl;
 
 				#ifndef LOG_NOMUTEX
 					this->_m_logging.unlock();

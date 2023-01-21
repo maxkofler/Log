@@ -50,7 +50,8 @@ namespace Log{
 
 	struct stream_config{
 		level	loglevel;
-		bool	print_function_names;
+		bool	print_function_names = false;
+		bool	enable_colors = true;
 	};
 
 	class Log{
