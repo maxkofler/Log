@@ -1,6 +1,7 @@
 #ifndef __LOG_H__
 #define __LOG_H__
 
+#include <map>
 #include <ostream>
 #include <string>
 
@@ -37,9 +38,7 @@ namespace Log{
 	};
 
 	enum feature{
-		FEATURE_PRINTFUNNAMES,		//If Log should print the function name of the log message
-		FEATURE_PROFILE,			//If Log should produce a profile trace, this impacts performance
-		FEATURE_COLOR				//If Log should enable Yellow for warnings and Red for errors
+		FEATURE_PROFILE				//If Log should produce a profile trace, this impacts performance
 	};
 
 	struct function_profile{
@@ -49,10 +48,16 @@ namespace Log{
 		size_t procID;
 	};
 
+	struct stream_config{
+		level	loglevel;
+		bool	print_function_names = false;
+		bool	enable_colors = true;
+	};
+
 	class Log{
 
 	public:
-		Log(level loglevel);
+		Log();
 		~Log();
 
 		/**
@@ -75,6 +80,20 @@ namespace Log{
 		 * @brief	Resets all the warnings that block the Log module from checking some things again due to performance reasons
 		 */
 		static void						resetWarnings();
+
+		/**
+		 * @brief	Adds a output stream to this Log instance
+		 * @param	stream				The stream to output to
+		 * @param	stream_config		The stream configuration to use for this stream
+		 * @return	bool	False if the stream has already been added
+		 */
+		bool							addStream(std::ostream& stream, stream_config conf);
+
+		/**
+		 * @brief	Returns a pointer to the stream config
+		 * @param	stream				The stream to get the config from
+		 */
+		stream_config*					getStreamConf(std::ostream& stream);
 
 		/**
 		 * @brief						En/Disables the provided feature
@@ -100,17 +119,9 @@ namespace Log{
 		 */
 		void							writeProfileFooter();
 
-
-		level							getLevel();
-		void							setLevel(level loglevel);
-
 	#ifndef FRIEND_LOG
 	private:
 	#endif
-
-		level							_loglevel;
-		bool							_print_function_names;
-		bool							_enable_colors = true;
 
 		#ifndef LOG_NOMUTEX
 		std::mutex						_m_logging;
@@ -119,6 +130,11 @@ namespace Log{
 		bool							_enable_profiling;
 		size_t							_profiles_count;
 		std::ostream*					_profile_stream;
+
+		/**
+		 * @brief	A map containing all the output streams and their levels
+		 */
+		std::map<std::ostream*, stream_config>	_streams;
 	};
 
 	class ProfileProbe{

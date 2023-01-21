@@ -5,37 +5,44 @@
 
 namespace Log{
 	bool Log::log(level loglevel, std::string function, std::string message){
-		if (loglevel <= this->_loglevel){
-			#ifndef LOG_NOMUTEX
-				this->_m_logging.lock();
-			#endif
 
-			std::stringstream msg;
+		//Go through every stream
+		for (const auto &stream : _streams){
 
-			#ifndef LOG_NOCOLOR
-				if (_enable_colors){
+			if (loglevel <= stream.second.loglevel){
+				#ifndef LOG_NOMUTEX
+					this->_m_logging.lock();
+				#endif
+
+				//A temporary buffer
+				std::stringstream ss_output;
+
+				#ifndef LOG_NOCOLOR
+				//Add the color information
+				if (stream.second.enable_colors)
 					if (loglevel == E || loglevel == UE)
-						msg << "\033[31;1m";
+						ss_output << "\033[31;1m";
 					if (loglevel == W || loglevel == UW)
-						msg << "\033[33;1m";
-				}
-			#endif
+						ss_output << "\033[33;1m";
 
-			if (this->_print_function_names)
-				msg << "[" << function << "]>>>";
+				if (stream.second.print_function_names)
+					ss_output << "[" << function << "]>>>";
+				#endif
 
-			msg << message;
+				ss_output << message;
 
-			#ifndef LOG_NOCOLOR
-				if (_enable_colors)
-					msg << "\033[0m";
-			#endif
+				#ifndef LOG_NOCOLOR
+				//Terminate color information
+				if (stream.second.enable_colors)
+					ss_output << "\033[0m";
+				#endif
 
-			std::cout << msg.str() << std::endl;
+				(*stream.first) << ss_output.str() << std::endl;
 
-			#ifndef LOG_NOMUTEX
-				this->_m_logging.unlock();
-			#endif
+				#ifndef LOG_NOMUTEX
+					this->_m_logging.unlock();
+				#endif
+			}
 		}
 		return true;
 	}

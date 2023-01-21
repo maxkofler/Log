@@ -3,8 +3,9 @@
 
 #include "log.h"
 
+//TODO: Refactor these tests
 TEST(Log, profileFunctionTime_output){
-	Log::Log* hlog = new Log::Log(Log::FUNCALLS);
+	Log::Log* hlog = new Log::Log();
 	hlog->setProfileStream(&std::cout);
 	hlog->setFeature(Log::FEATURE_PROFILE, true);
 
@@ -26,7 +27,7 @@ TEST(Log, profileFunctionTime_output){
 }
 
 TEST(Log, profileFunctionTime_scope){
-	Log::Log* hlog = new Log::Log(Log::FUNCALLS);
+	Log::Log* hlog = new Log::Log();
 	hlog->setProfileStream(&std::cout);
 	hlog->setFeature(Log::FEATURE_PROFILE, true);
 

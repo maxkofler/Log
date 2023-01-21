@@ -9,7 +9,7 @@ TEST(Log, hlogUninitialized){
 }
 
 TEST(Log, hlogNew){
-	hlog = new Log::Log(Log::D);
+	hlog = new Log::Log();
 
 	#ifdef LOG_ENABLE_PROFILING
 	hlog->setFeature(Log::FEATURE_PROFILE, true);

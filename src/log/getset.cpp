@@ -1,10 +1,7 @@
 #include "log.h"
 #include <iostream>
 
-Log::level Log::Log::getLevel(){
-	return this->_loglevel;
-}
-
+/*
 void Log::Log::setLevel(level loglevel){
 
 	if (loglevel > LOG_MAX_LEVEL){
@@ -15,4 +12,14 @@ void Log::Log::setLevel(level loglevel){
 	}
 
 	this->_loglevel = loglevel;
+}
+*/
+
+Log::stream_config* Log::Log::getStreamConf(std::ostream& stream){
+	std::ostream* streamPtr = &stream;
+
+	if (_streams.count(streamPtr) <= 0)
+		return nullptr;
+
+	return &(_streams[streamPtr]);
 }

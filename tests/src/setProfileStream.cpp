@@ -7,7 +7,7 @@
 TEST(Log, setProfileStream){
 	Log::Log *hlog;
 
-	hlog = new Log::Log(Log::A);
+	hlog = new Log::Log();
 
 	ASSERT_EQ(nullptr, hlog->_profile_stream) << "Stream is not initialized to nullptr";
 
