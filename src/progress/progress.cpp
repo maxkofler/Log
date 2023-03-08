@@ -64,6 +64,7 @@ namespace Log {
         output += preBar + " ";
         output += "[" + std::string(progress, '#') + std::string(maxSteps - progress, ' ') + "] ";
         output += std::to_string(percentage) + "%";
+        output += std::string(terminal_width - output.length(), ' ');
 
         //Only output if the bar has changed
         if (output != _bar){
