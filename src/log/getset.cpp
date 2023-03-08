@@ -23,3 +23,11 @@ Log::stream_config* Log::Log::getStreamConf(std::ostream& stream){
 
 	return &(_streams[streamPtr]);
 }
+
+void Log::Log::setTerminalWidth(uint32_t w){
+	_terminal_width = w;
+}
+
+uint32_t Log::Log::getTerminalWidth(){
+	return _terminal_width;
+}

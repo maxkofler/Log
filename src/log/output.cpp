@@ -17,6 +17,13 @@ namespace Log{
 				//A temporary buffer
 				std::stringstream ss_output;
 
+				//If there are any progresses, print a newline and cursor up
+				if (stream.second.enable_progress){
+					ss_output << "\n";
+					for (uint32_t i = 0; i < _progresses.size()+1; i++)
+						ss_output << "\033[F";
+				}
+
 				#ifndef LOG_NOCOLOR
 				//Add the color information
 				if (stream.second.enable_colors)
@@ -29,7 +36,11 @@ namespace Log{
 					ss_output << "[" << function << "]>>>";
 				#endif
 
-				ss_output << message;
+				//If a progress is displayed, clear the line of the logged message
+				if (stream.second.enable_progress)
+					ss_output << "\033[2K";
+
+				ss_output << message << std::endl;
 
 				#ifndef LOG_NOCOLOR
 				//Terminate color information
@@ -37,7 +48,16 @@ namespace Log{
 					ss_output << "\033[0m";
 				#endif
 
-				(*stream.first) << ss_output.str() << std::endl;
+				//If there are progresses to print, update them now
+				if (stream.second.enable_progress){
+					for (uint32_t i = _progresses.size(); i > 0; i--){
+						_progresses[i-1]->_m_bar.lock();
+						ss_output << _progresses[i-1]->_bar << "\n";
+						_progresses[i-1]->_m_bar.unlock();
+					}
+				}
+
+				(*stream.first) << ss_output.str();
 
 				#ifndef LOG_NOMUTEX
 					this->_m_logging.unlock();

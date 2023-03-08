@@ -4,14 +4,20 @@
 #include <map>
 #include <ostream>
 #include <string>
+#include <deque>
 
 #ifndef LOG_NOMUTEX
 #include <mutex>
 #endif
 
+
 namespace Log{
 	class Log;
+	class Progress;
+	class conf_Progress;
 }
+
+#include "progress.h"
 
 extern Log::Log* hlog;
 
@@ -52,6 +58,7 @@ namespace Log{
 		level	loglevel;
 		bool	print_function_names = false;
 		bool	enable_colors = true;
+		bool	enable_progress = false;
 	};
 
 	class Log{
@@ -119,6 +126,25 @@ namespace Log{
 		 */
 		void							writeProfileFooter();
 
+		/**
+		 * @brief	Updates the terminal width
+		 * @param	width				The new width to use
+		 */
+		void							setTerminalWidth(uint32_t width);
+
+		/**
+		 * @brief	Returns the terminal width last set by setTerminalWidth()
+		 */
+		uint32_t						getTerminalWidth();
+
+		/**
+		 * @brief	Returns a new progress using the supplied config
+		 * @param	config				The config to use
+		 */
+		std::shared_ptr<Progress>		createProgress(const conf_Progress& config);
+
+		//The Progress class is a friend
+		friend class Progress;
 	#ifndef FRIEND_LOG
 	private:
 	#endif
@@ -135,6 +161,28 @@ namespace Log{
 		 * @brief	A map containing all the output streams and their levels
 		 */
 		std::map<std::ostream*, stream_config>	_streams;
+
+		///
+		///		Progress management
+		///
+
+		/// @brief	A list of pointer to progresses managed by this Log instance
+		std::deque<Progress*>			_progresses;
+
+		/// @brief	Terminal width, needed for progress
+		uint32_t						_terminal_width = 0;
+
+		/**
+		 * @brief	A callback for a Progress object, this removes this progress from the _progresses list
+		 * @param	progress			A pointer to the progress to remove
+		 */
+		void							removeProgress(Progress* progress);
+
+		/**
+		 * @brief	A callback for a Progress object to signal it has been updated
+		 * @param	progress			The progress that signals the update
+		 */
+		void							progressUpdated(Progress* progress);
 	};
 
 	class ProfileProbe{
