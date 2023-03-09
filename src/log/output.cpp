@@ -25,12 +25,17 @@ namespace Log{
 				}
 
 				#ifndef LOG_NOCOLOR
+				bool color_printed = false;
 				//Add the color information
-				if (stream.second.enable_colors)
-					if (loglevel == E || loglevel == UE)
+				if (stream.second.enable_colors){
+					if (loglevel == E || loglevel == UE){
 						ss_output << "\033[31;1m";
-					if (loglevel == W || loglevel == UW)
+						color_printed = true;
+					} if (loglevel == W || loglevel == UW){
 						ss_output << "\033[33;1m";
+						color_printed = true;
+					}
+				}
 
 				if (stream.second.print_function_names)
 					ss_output << "[" << function << "]>>>";
@@ -44,7 +49,7 @@ namespace Log{
 
 				#ifndef LOG_NOCOLOR
 				//Terminate color information
-				if (stream.second.enable_colors)
+				if (stream.second.enable_colors && color_printed)
 					ss_output << "\033[0m";
 				#endif
 
