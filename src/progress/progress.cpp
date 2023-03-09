@@ -48,9 +48,15 @@ namespace Log {
                 return false;
         }
 
-        double p_per_step = p_max / (double)maxSteps;
+        uint32_t progress;
+        if (p_max / (double)maxSteps < maxSteps){
+            double p_per_step = p_max / (double)maxSteps;
+            progress = p_cur / p_per_step;
+        } else {
+            uint32_t p_per_step = p_max / (double)maxSteps;
+            progress = p_cur / p_per_step;
+        }
         uint32_t spaces = terminal_width - min_width - maxSteps;
-        uint32_t progress = p_cur / p_per_step;
         uint32_t percentage = ((double)p_cur / (double)p_max) * 100.0;
 
         //For debugging
