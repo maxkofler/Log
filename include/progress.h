@@ -72,8 +72,10 @@ namespace Log {
         /// @brief  Stores the last rendered bar
         std::string                 _bar = "";
 
+        #ifndef LOG_NOMUTEX
         /// @brief  A mutex to protect the string from being updated while outputting
         std::mutex                  _m_bar;
+        #endif
 
     };
 

@@ -68,9 +68,15 @@ namespace Log {
 
         //Only output if the bar has changed
         if (output != _bar){
-            _m_bar.lock();
+            #ifndef LOG_NOMUTEX
+                _m_bar.lock();
+            #endif
+
             _bar = output;
-            _m_bar.unlock();
+
+            #ifndef LOG_NOMUTEX
+                _m_bar.unlock();
+            #endif
 
             //Notify the Log instance
             _log->progressUpdated(this);

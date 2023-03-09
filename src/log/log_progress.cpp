@@ -43,16 +43,20 @@ namespace Log{
 			if (_progresses.size() == 0)
 				return;
 
+			#ifndef LOG_NOMUTEX
 			std::lock_guard __guard(_m_logging);
+			#endif
 
 			//Go up for all the progresses
 			for (uint32_t i = 0; i < _progresses.size(); i++)
 				*(stream.first) << "\033[F";
 
 			for (uint32_t i = _progresses.size(); i > 0; i--){
-				_progresses[i-1]->_m_bar.lock();
+				#ifndef LOG_NOMUTEX
+					std::lock_guard<std::mutex> __guard_progress(_progresses[i-1]->_m_bar);
+				#endif
+
 				*(stream.first) << _progresses[i-1]->_bar << "\n";
-				_progresses[i-1]->_m_bar.unlock();
 			}
 
 			stream.first->flush();
